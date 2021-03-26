@@ -24,6 +24,7 @@
 *    KNN
 *    LDA
 *    QDA
+*    others.....
 
 ### 參數說明
 
