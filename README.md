@@ -72,4 +72,4 @@ once some tolerance is achieved, i.e. once you're close enough.
 
 反之，越接近0，每一個誤差/分錯的資料都會被懲罰。
 
-fork from smile.
+fork from ![smile](https://github.com/haifengl/smile).
