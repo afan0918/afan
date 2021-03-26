@@ -33,13 +33,21 @@
 運行內核:L-BFGS
 
 *    MaxIter 最大迭代次數
+
 maximum number of iterations
+
 *    lambda(λ)
+
 Tune the overall impact of the regularization term by multiplying its value.
+
 Encourages weight values toward 0 (but not exactly 0)
+
 Encourages the mean of the weights toward 0, with a normal (bell-shaped or Gaussian) distribution.
+
 *    tolerance
+
 To stop searching for a minimum (or maximum) 
+
 once some tolerance is achieved, i.e. once you're close enough.
 
 #### SVM(支持向量機)
@@ -47,13 +55,21 @@ once some tolerance is achieved, i.e. once you're close enough.
 運行內核:LASVM
 
 *    c->cost
-可以當成容錯項，值越大榮挫越少
+
+可以當成容錯項，值越大容錯越少
+
 須注意c值太大會容易 OverFitting
+
 c越小會有越多 support vectors
+
 *    tolerance
+
 To stop searching for a minimum (or maximum) 
+
 once some tolerance is achieved, i.e. once you're close enough.
+
 越大，表示在容忍範圍內的誤差/分錯的資料，不會被懲罰
+
 反之，越接近0，每一個誤差/分錯的資料都會被懲罰。
 
 fork from smile.
