@@ -1,4 +1,6 @@
-# Mesflow
+# Afan
+
+因為教授說可以拿名字當名稱我就這樣了
 
 ## 用軟體來簡化做機器學習的過程
 
@@ -7,6 +9,8 @@
 #### 運算
 
 能夠快速的使用logistic regression(邏輯回歸)、SVM(支持向量機)來快速進行模型訓練，不必與程式碼進行交互。
+找出ROC cut-off point(糟糕我寫到這裡突然發現忘記匯出給使用者)與能夠方便的以ROC cut-off point對數據資料做初篩。
+能夠輕鬆高效的把所有數據資料的組合跑過一遍機器學習
 
 #### 輸入資料
 
@@ -15,13 +19,13 @@
 #### 輸出資料
 
 *    model(weights)
-*    ROC Curve(數據圖)
 *    roc cut-off point value
-*    預測結果(可加)
 
 ### 未來可加入選項
 
-*    KNN
+雖然是可加入，但我先把圖畫完再說。
+
+*    KNN(
 *    LDA
 *    QDA
 *    others.....
@@ -50,6 +54,8 @@ To stop searching for a minimum (or maximum)
 
 once some tolerance is achieved, i.e. once you're close enough.
 
+每次執行結果會一樣，不具隨機性。
+
 #### SVM(支持向量機)
 
 運行內核:LASVM
@@ -71,5 +77,7 @@ once some tolerance is achieved, i.e. once you're close enough.
 越大，表示在容忍範圍內的誤差/分錯的資料，不會被懲罰
 
 反之，越接近0，每一個誤差/分錯的資料都會被懲罰。
+
+每次執行結果不一樣，具隨機性。
 
 fork from [smile](https://github.com/haifengl/smile).
