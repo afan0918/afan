@@ -81,3 +81,9 @@ once some tolerance is achieved, i.e. once you're close enough.
 每次執行結果不一樣，具隨機性。
 
 fork from [smile](https://github.com/haifengl/smile).
+
+#### 版本概述
+
+1.0.0 2MB可以跑多種機器學習還可以生出相對應數據圖，也太香了八
+
+1.1.0 乾變成了87MB，睡前懶得壓大小了，之後再說，抱歉了
