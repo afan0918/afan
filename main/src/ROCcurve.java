@@ -13,125 +13,108 @@ public class ROCcurve {
     private final RocCurvesCollection ROC = new RocCurvesCollection(true);
     RocSpace space = new RocSpace();
 
-    public ArrayList<Double> CutOffPoints = new ArrayList<>();
+    public ArrayList<Double> CutOffPoints;
     public ArrayList<Double> auc = new ArrayList<>();
     public ArrayList<Color> colors = new ArrayList<>();
     public double[][] data;
+    public String[] DataTitle;
+    public int[] more;
 
-    /**
-     * 做一些ROC圖表的初步計算
-     * 將傳入的單項數據的Cut-off point
-     * 以及AUC(Area under the ROC Curve)
-     * 存入class
-     * 圖形存入space當中以利後續畫圖
-     *
-     * @param expected  Label.
-     * @param probaData Data.
-     */
-
-    public void ROC(int[] expected, double[] probaData) {
-
-        /**
-         * 計算CUT-OFF點
-         */
-
+    public void CutOffPoint(int[] label,double[][] Data,double minAUC) {
+        CutOffPoints = new ArrayList<>();
+        int[] feature = new int[Data.length];
+        double[] dtmp=new double[Data.length];
         double tmp;
         int itmp;
-        for (int j = 0; j < probaData.length; j++) {
-            for (int k = 1; k < probaData.length-j; k++) {
-                if (probaData[k] < probaData[k - 1]) {
-                    tmp = probaData[k];
-                    probaData[k] = probaData[k - 1];
-                    probaData[k - 1] = tmp;
-                    itmp = expected[k];
-                    expected[k] = expected[k - 1];
-                    expected[k - 1] = itmp;
-                }
-            }
-        }
 
-        Curve curve = new Curve(expected, 1);
-        double[] FPRAndTPR;//FPR與TPR
-        double maxVal = 0;
-        int CutOffPoint = 0;
-
-        for (int i = 0; i < expected.length; i++) {
-            FPRAndTPR = curve.rocPoint(i);
-            tmp = FPRAndTPR[0]-FPRAndTPR[1];
-            if (Math.abs(tmp) > maxVal) {
-                CutOffPoint = i;
-                maxVal = Math.abs(tmp);
-            }
-        }
-
-        auc.add(curve.prArea());//用求梯形的方式積出auc
-
-        /**
-         *ROC圖表繪製
-         */
-
-        double[] proba = new double[probaData.length];
+        double[] proba = new double[Data.length];
 
         for (int j = 0; j < proba.length; j++) {
             proba[j] = (double) j / (proba.length - 1);
         }
 
-        ReceiverOperatingCharacteristics roc = new ReceiverOperatingCharacteristics(expected, proba, 1000);
+        for (int i = 0; i < Data[0].length; i++) {
 
-        /**
-         * 算AUC的部分
-         */
-//        AreaUnderCurve auc = new AreaUnderCurve(roc);
-//        boolean flag=false;
-//        if(Tools.round(100 * auc.getAreaValue(), 2)<50){
-//            flag=true;
-//            for (int j = 0; j < proba.length; j++)
-//                proba[j] = (double) (proba.length - 1-j) / (proba.length - 1);
-//            roc = new ReceiverOperatingCharacteristics(expected, proba, 1000);
-//            auc = new AreaUnderCurve(roc);
-//        }
-//
-//        String output = DataTitle + " , AUC = ";
-//        output += Tools.round(100 * auc.getAreaValue(), 2) + " %";
-//        System.out.println(output);
-        ROC.add(roc);
+            for (int j = 0; j < Data.length; j++) {
+                feature[j] = label[j];
+                dtmp[j]=Data[j][i];
+            }
 
-        int r = (int) (Math.random() * 200);
-        int g = (int) (Math.random() * 200);
-        int b = (int) (Math.random() * 200);
+            for (int j = 0; j < feature.length; j++) {
+                for (int k = 1; k < feature.length-j; k++) {
+                    if (dtmp[k] < dtmp[k-1]) {
+                        tmp = dtmp[k];
+                        dtmp[k] = dtmp[k-1];
+                        dtmp[k-1] = tmp;
+                        itmp = feature[k];
+                        feature[k] = feature[k - 1];
+                        feature[k - 1] = itmp;
+                    }
+                }
+            }
 
-        Color color = new Color(r, g, b);
-        colors.add(color);
+            Curve curve = new Curve(feature,1);
+            double[] FPRAndTPR;//FPR與TPR
+            double maxVal = 0;
+            int CutOffPoint = 0;
 
-        roc.setColor(color);//隨機給定顏色值
-        //roc.setThickness(1.f);//把線條變細
+            for (int j = 0; j < label.length; j++) {
+                FPRAndTPR = curve.rocPoint(j);
+                tmp = FPRAndTPR[0] - FPRAndTPR[1];
+                if (Math.abs(tmp) > maxVal) {
+                    CutOffPoint = j;
+                    maxVal = Math.abs(tmp);
+                }
+            }
 
-        /**
-         * 取漸近的部分
-         */
-//        Context context = new Context(ftr, tpr, 0, 0, 0.5, 0.5);
-//        IsoCostLine line = new IsoCostLine(context);
-//        line.setIntercept(0.5);
-//        OperatingPoint point = line.optimize(ROC.get(ROC.size() - 1));
-//        double threshold = Tools.round(point.getThreshold(), (int)Math.log(proba.length)+3);
+            CutOffPoints.add(CutOffPoint!=0?(dtmp[CutOffPoint]+ dtmp[CutOffPoint - 1]) / 2:dtmp[0]);
 
-//        if(flag) {//有被翻轉
-//            //System.out.println((threshold * (probaData.length - 1)));
-//            if (threshold * (probaData.length - 1)-(int)(threshold * (probaData.length - 1))<0.5) {
-//                //System.out.println((probaData[(probaData.length - 1) - (int) (threshold * (probaData.length - 1) + 1.5)] + probaData[(probaData.length - 1) - (int) (threshold * (probaData.length - 1) + 0.5)]) / 2);
-//                CutPoints.add((probaData[(probaData.length - 1) - (int) (threshold * (probaData.length - 1) + 1.5)] + probaData[(probaData.length - 1) - (int) (threshold * (probaData.length - 1) + 0.5)]) / 2);
-//            }else{
-//                //System.out.println((probaData[(probaData.length) - (int) (threshold * (probaData.length - 1) - 0.5)] + probaData[(probaData.length) - (int) (threshold * (probaData.length - 1) + 0.5)]) / 2);
-//                CutPoints.add((probaData[(probaData.length) - (int) (threshold * (probaData.length - 1) - 0.5)] + probaData[(probaData.length) - (int) (threshold * (probaData.length - 1) + 0.5)]) / 2);
-//            }
-//        }else{
-//            //System.out.println((probaData[(int) (threshold * (probaData.length - 1) + 1.5)] + probaData[(int) (threshold * (probaData.length - 1) + 0.5)]) / 2);
-//            CutPoints.add((probaData[(int) (threshold * (probaData.length - 1) + 1.5)] + probaData[(int) (threshold * (probaData.length - 1) + 0.5)]) / 2);
-//        }
-//        Flag.add(flag);
-        System.out.println(CutOffPoint);
-        System.out.println((probaData[CutOffPoint] + probaData[CutOffPoint - 1]) / 2);
-        CutOffPoints.add((probaData[CutOffPoint] + probaData[CutOffPoint - 1]) / 2);
+            if (curve.rocArea() > 0.5)
+                auc.add(curve.rocArea());
+            else
+                auc.add(1 - curve.rocArea());
+
+            //先把圖畫好
+            if(curve.rocArea()>=minAUC||1 - curve.rocArea()>=minAUC) {
+
+                ReceiverOperatingCharacteristics roc = new ReceiverOperatingCharacteristics(feature, proba, 1000);
+
+                ROC.add(roc);
+
+                int r = (int) (Math.random() * 200);
+                int g = (int) (Math.random() * 200);
+                int b = (int) (Math.random() * 200);
+
+                Color color = new Color(r, g, b);
+                colors.add(color);
+
+                roc.setColor(color);//隨機給定顏色值
+                //roc.setThickness(1.f);//把線條變細
+            }
+        }
+
+        more = new int[Data[0].length];
+        for (int i = 0; i < more.length; i++) {
+            if (auc.get(i) >= minAUC) more[i] = 1;
+            else more[i] = 0;
+        }
+    }
+
+    public void FilterData(double[][] Data) {
+        int num = Arrays.stream(more).sum();
+        int count = 0;
+        data = new double[Data.length][num];
+        DataTitle=new String[num];
+        for (int i = 0; i < more.length; i++) {
+            while (i < more.length && more[i] == 0) i++;
+            if (i >= more.length) break;
+            for (int j = 0; j < Data.length; j++) {
+                if (Data[j][i] >= CutOffPoints.get(i)) data[j][count] = 1;
+                else data[j][count] = 0;
+            }
+            DataTitle[count]=DataBase.csvFile.DataTitle[i+1];
+            count++;
+        }
     }
 
     /**
@@ -172,31 +155,50 @@ public class ROCcurve {
         fen.setVisible(true);
     }
 
-    /**
-     * 依照cut-off point
-     * 將數據分為兩類並存好
-     *
-     * @param Data The training data.
-     */
-
-    public void CutPoint(double[][] Data) {//只能畫一條線
-        data = new double[Data.length][Data[0].length];
-        for (int i = 0; i < Data.length; i++) {
-            for (int j = 0; j < Data[0].length; j++) {
-                if(Data[i][j] < CutOffPoints.get(j)) {
-                    data[i][j] = 0;
-                }else{
-                    data[i][j] = 1;
-                }
-            }
-        }
-        for (int i = 0; i < Data.length; i++) {
-            for (int j = 0; j < Data[0].length; j++) {
-                System.out.println(data[i][j]);
-            }
-        }
-    }
-
+//    /**
+//     * 依照cut-off point
+//     * 將數據分為兩類並存好
+//     *
+//     * @param Data The training data.
+//     */
+//
+//    public void CutPoint(double[][] Data,double minAUC) {//只能畫一條線
+//        int count=0;//計數器，統計auc值大於minAUC的個數
+//        int c=0;
+//        more = new int[Data.length];
+//
+//        for(int i=0;i<Data[0].length;i++){
+//            if(auc.get(i)>=minAUC){
+//                count++;
+//                more[i]=1;
+//            }else{
+//                more[i]=0;
+//            }
+//        }
+//
+//        /**
+//         * 記得要寫好資料分類
+//         */
+//
+//        data = new double[Data.length][count];
+//        for (int j = 0; j < Data[0].length; j++) {
+//            if(more[j]==1) continue;
+//            for (int i = 0; i < Data.length; i++) {
+//                if(Data[i][j] < CutOffPoints.get(j)) {
+//                    data[i][c] = 0;
+//                }else{
+//                    data[i][c] = 1;
+//                }
+//            }
+//            c++;
+//        }
+//        for (int i = 0; i < data.length; i++) {
+//            for (int j = 0; j < data[0].length; j++) {
+//                System.out.println(data[i][j]);
+//            }
+//        }
+//    }
+    
     /**
      * 將會製成的ROC圖表存檔至指定位置
      *
