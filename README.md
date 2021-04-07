@@ -84,6 +84,11 @@ once some tolerance is achieved, i.e. once you're close enough.
 
 因為我只會寫logistic regression跟SVM，所以目前也只有這兩個，之後我多加幾個。
 
+#### 作者好爛，我要自行編譯改寫
+
+好~，不過建議lib直接用我整理好的.jar包，因為取資料需求，我有改寫SVM部分的smile-core然後重新封裝，所以如果直接下載 [smile](https://github.com/haifengl/smile)的話
+，可能SVM部分會壞掉，須注意。
+
 #### 版本概述
 
 1.0.0 2MB可以跑多種機器學習還可以生出相對應數據圖，也太香了八
