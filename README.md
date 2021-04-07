@@ -24,6 +24,8 @@
 
 ![](https://i.imgur.com/PnNEBnI.png)
 
+檔案類型為.csv檔，選擇要匯入的檔案時也會只給你選該類型檔案名稱。
+
 #### 輸出資料
 
 *    model(weights)
