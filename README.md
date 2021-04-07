@@ -80,7 +80,9 @@ once some tolerance is achieved, i.e. once you're close enough.
 
 每次執行結果不一樣，具隨機性。
 
-fork from [smile](https://github.com/haifengl/smile).
+機器學習的算法部份一開始我自己寫，後來因為效能考量和我覺得照我的算法來寫還需要自己證明正確性，所以改引用 [smile](https://github.com/haifengl/smile) 。
+
+因為我只會寫logistic regression跟SVM，所以目前也只有這兩個，之後我多加幾個。
 
 #### 版本概述
 
