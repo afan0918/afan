@@ -1,0 +1,64 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Afan Chen
+ */
+class MathMethod {
+
+    public static List<int[]> Combination(int n, int r) {
+        List<int[]> combinations = new ArrayList<>();
+        int[] combination = new int[r];
+
+        // initialize with lowest lexicographic combination
+        for (int i = 0; i < r; i++) {
+            combination[i] = i;
+        }
+
+        while (combination[r - 1] < n) {
+            combinations.add(combination.clone());
+
+            // generate next combination in lexicographic order
+            int t = r - 1;
+            while (t != 0 && combination[t] == n - r + t) {
+                t--;
+            }
+            combination[t]++;
+            for (int i = t + 1; i < r; i++) {
+                combination[i] = combination[i - 1] + 1;
+            }
+        }
+
+        return combinations;
+    }
+
+    public static void reverse(double[] data) {
+        for (int left = 0, right = data.length - 1; left < right; left++, right--) {
+            // swap the values at the left and right indices
+            double temp = data[left];
+            data[left]  = data[right];
+            data[right] = temp;
+        }
+    }
+
+    public static void ComplementReverse(int[] feature) {
+        for (int i=0;i<feature.length;i++) {
+            if(feature[i]==1) feature[i]=0;
+            else if(feature[i]==0) feature[i]=1;
+        }
+    }
+
+    public static double[] GetBestFScore(ArrayList<Double> fScores, ArrayList<int[]> combinations, int size) {
+        double[] list=new double[size-1];
+        int pos=0;
+        for(int i=2;i<=size;i++){
+            double max = 0;
+            while(pos<combinations.size()&&i==combinations.get(pos).length) {
+                if (max<fScores.get(pos)) max=fScores.get(pos);
+                pos++;
+            }
+            list[i-2]=max;
+        }
+        return list;
+    }
+}
