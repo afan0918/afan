@@ -6,20 +6,20 @@ English | [繁體中文](https://github.com/afan0918/Afan/blob/main/README-TW.md
 
 The project is fork from [Use-Logistic-regression-to-process-data](https://github.com/afan0918/Use-Logistic-regression-to-process-data)(in my repositories).
 
-### Description
+## Description
 
 Afan is a light-weight and user-friendly software.
 
 You can follow the document to learn how to use it.
 
-#### Algorithm of machine learning
+## Algorithm of machine learning
 
 * Logistic Regression
 * SVM(Support Vector Machine)
 
 * Run all data combinations.
 
-#### Input
+### Input
 
 ![](https://i.imgur.com/PnNEBnI.png)
 
@@ -27,12 +27,12 @@ Input .csv file and follow the format.
 
 You can discard features with low AUC values.
 
-#### Output
+## Output
 
 *    model(weights)
 *    roc cut-off point value
 
-### Features
+## Features
 
 * [x] Logistic Regression
 * [x] SVM(Support Vector Machine)
@@ -44,11 +44,11 @@ You can discard features with low AUC values.
 * [x] Run all data combinations.
 * [x] Export 300DPI chart graph.
 
-### Explanation of hyperparameters
+## Explanation of hyperparameters
 
-#### Logistic Regression
+### Logistic Regression
 
-##### Algorithm : L-BFGS
+#### Algorithm : L-BFGS
 
 *    MaxIter
 
@@ -68,11 +68,11 @@ To stop searching for a minimum (or maximum)
 
 once some tolerance is achieved, i.e. once you're close enough.
 
-##### The result of each execution will be the same, not random.
+#### The result of each execution will be the same, not random.
 
-#### SVM(Support Vector Machine)
+### SVM(Support Vector Machine)
 
-##### Algorithm : LASVM
+#### Algorithm : LASVM
 
 *    c->cost
 
@@ -90,11 +90,11 @@ To stop searching for a minimum (or maximum)
 
 once some tolerance is achieved, i.e. once you're close enough.
 
-##### Each execution result will be different
+#### Each execution result will be different
 
 The algorithm part of machine learning use [smile](https://github.com/haifengl/smile) 。
 
-### Contributions
+## Contributions
 
 Every contribution is welcome. Please refer to the contribution guidelines for more information.
 
