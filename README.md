@@ -39,7 +39,8 @@ You can discard features with low AUC values.
 * [ ] KNN
 * [ ] FLD
 * [ ] RBFNetwork
-* [ ] Others
+* [x] Draw the ROC curve.
+* [x] Draw the FScore line chart.
 * [x] Run all data combinations.
 * [x] Export 300DPI chart graph.
 
