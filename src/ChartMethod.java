@@ -5,16 +5,15 @@ import org.knowm.xchart.style.Styler;
 import java.util.ArrayList;
 
 public class ChartMethod {
-    public static void DrawFScoreChart(XYChart chart,String[] DataTitle, ArrayList<double[]> Data) throws Exception {
+    public static XYChart DrawFScoreChart(ArrayList<String> DataTitle, ArrayList<double[]> Data) throws Exception {
         // Create Chart
-        chart = new XYChartBuilder().width(339).height(287).xAxisTitle("Combination").yAxisTitle("FScore").build();
-
+        XYChart chart = new XYChartBuilder().width(800).height(600).xAxisTitle("Combination").yAxisTitle("FScore").build();
         // Customize Chart
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
-
         // Series
-        for(int i=0;i<DataTitle.length;i++) {
-            chart.addSeries(DataTitle[i], Data.get(i));
+        for(int i=0;i<DataTitle.size();i++) {
+            chart.addSeries(DataTitle.get(i), Data.get(i));
         }
+        return chart;
     }
 }

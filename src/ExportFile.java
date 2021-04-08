@@ -59,16 +59,14 @@ public class ExportFile extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         ExportROCCurve = new javax.swing.JCheckBox();
         ExportModel = new javax.swing.JCheckBox();
-        ExportLineChart = new javax.swing.JCheckBox();
         Save = new javax.swing.JButton();
 
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("微軟正黑體", 0, 16)); // NOI18N
         jLabel1.setText("File Path");
 
         FilePath.setFont(new java.awt.Font("微軟正黑體", 0, 16)); // NOI18N
-        FilePath.setText("");
 
         FilePicker.setFont(new java.awt.Font("微軟正黑體", 0, 16)); // NOI18N
         FilePicker.setText("File Picker");
@@ -87,9 +85,6 @@ public class ExportFile extends javax.swing.JFrame {
         ExportModel.setFont(new java.awt.Font("微軟正黑體", 0, 16)); // NOI18N
         ExportModel.setText("Export the training model");
 
-        ExportLineChart.setFont(new java.awt.Font("微軟正黑體", 0, 16)); // NOI18N
-        ExportLineChart.setText("Export Line Chart");
-
         Save.setFont(new java.awt.Font("微軟正黑體", 0, 16)); // NOI18N
         Save.setText("Save");
         Save.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +100,6 @@ public class ExportFile extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(ExportLineChart)
                                         .addComponent(ExportROCCurve)
                                         .addComponent(jLabel3)
                                         .addGroup(layout.createSequentialGroup()
@@ -135,9 +129,7 @@ public class ExportFile extends javax.swing.JFrame {
                                 .addComponent(ExportModel)
                                 .addGap(2, 2, 2)
                                 .addComponent(ExportROCCurve)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ExportLineChart)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                                 .addComponent(Save)
                                 .addGap(25, 25, 25))
         );
@@ -312,6 +304,7 @@ public class ExportFile extends javax.swing.JFrame {
                 flag=false;
                 e.printStackTrace();
             }
+            DataBase.ROC.SavepngFile(FilePath.getText()+"\\ROC_Curve.png");
         }
 
         if(flag) {
@@ -356,7 +349,6 @@ public class ExportFile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify
-    private javax.swing.JCheckBox ExportLineChart;
     private javax.swing.JCheckBox ExportModel;
     private javax.swing.JCheckBox ExportROCCurve;
     protected javax.swing.JTextField FilePath;

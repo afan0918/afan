@@ -49,7 +49,7 @@ class MathMethod {
     }
 
     public static double[] GetBestFScore(ArrayList<Double> fScores, ArrayList<int[]> combinations, int size) {
-        double[] list=new double[size-1];
+        double[] list=new double[size];
         int pos=0;
         for(int i=2;i<=size;i++){
             double max = 0;
@@ -57,8 +57,16 @@ class MathMethod {
                 if (max<fScores.get(pos)) max=fScores.get(pos);
                 pos++;
             }
-            list[i-2]=max;
+            list[i-1]=max;
         }
         return list;
+    }
+
+    public static double getMaxValue(ArrayList<Double> list) {
+        double max=0;
+        for(int i=0;i<list.size();i++){
+            max=Math.max(max,list.get(i));
+        }
+        return max;
     }
 }

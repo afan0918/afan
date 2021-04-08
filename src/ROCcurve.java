@@ -14,9 +14,10 @@ public class ROCcurve {
 
     private final RocCurvesCollection ROC = new RocCurvesCollection(true);
     RocSpace space = Main.gui.jPanel5;
-    RocSpace space2 = Main.gui.ROCChart;
+    RocSpace space2 = Main.gui.jPanel4;
 
     public ArrayList<Double> CutOffPoints;
+    public ArrayList<Double> fScores;
     public ArrayList<Double> auc = new ArrayList<>();
     public ArrayList<Color> colors = new ArrayList<>();
     public double[][] data;
@@ -25,6 +26,7 @@ public class ROCcurve {
 
     public void CutOffPoint(int[] label,double[][] Data,double minAUC) {
         CutOffPoints = new ArrayList<>();
+        fScores = new ArrayList<>();
         int[] feature = new int[Data.length];
         double[] dtmp=new double[Data.length];
         double tmp;
@@ -76,6 +78,11 @@ public class ROCcurve {
                 auc.add(curve.rocArea());
             else
                 auc.add(1 - curve.rocArea());
+
+            int[] TP_FP_FN_TN=curve.confusionMatrix(CutOffPoint);
+            double recall = (double) TP_FP_FN_TN[0] / (TP_FP_FN_TN[0] + TP_FP_FN_TN[2]), precision = (double) TP_FP_FN_TN[0] / (TP_FP_FN_TN[0] + TP_FP_FN_TN[1]);
+            double fscore = 2 * recall * precision / (recall + precision);
+            fScores.add(fscore);
 
             //先把圖畫好
             if(curve.rocArea()>=minAUC||1 - curve.rocArea()>=minAUC) {
@@ -199,7 +206,6 @@ public class ROCcurve {
      */
 
     public void SavepngFile(String Path) {
-        Path += "\\ROCcurve.png";
-        space.save(Path, RocSpace.FORMAT_PNG);
+        space2.save(Path, RocSpace.FORMAT_PNG);
     }
 }
