@@ -75,11 +75,13 @@ once some tolerance is achieved, i.e. once you're close enough.
 
 *    c->cost
 
-可以當成容錯項，值越大容錯越少
+The C parameter tells the SVM optimization how much you want to avoid misclassifying each training example. 
 
-須注意c值太大會容易 OverFitting
+For large values of C, the optimization will choose a smaller-margin hyperplane if that hyperplane does a better job of getting all the training points classified correctly. 
 
-c越小會有越多 support vectors
+Conversely, a very small value of C will cause the optimizer to look for a larger-margin separating hyperplane, even if that hyperplane misclassifies more points. 
+
+For very tiny values of C, you should get misclassified examples, often even if your training data is linearly separable.
 
 *    tolerance
 
