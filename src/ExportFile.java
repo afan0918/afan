@@ -182,9 +182,9 @@ public class ExportFile extends javax.swing.JFrame {
             fw.append(",").append(String.valueOf(FScore.get(i)));
             fw.append(",").append(String.valueOf(Sensitivity.get(i)));
             fw.append(",").append(String.valueOf(Specificity.get(i)));
-            int c = 0;
+            int c = -1;
             for (int j = 0; j < combinations.get(i).length; j++) {
-                for (int k = c; k < combinations.get(i)[j] - 1; k++) fw.append(",");
+                for (int k = c; k < combinations.get(i)[j]-1; k++) fw.append(",");
                 c = combinations.get(i)[j];
                 fw.append(",").append(String.valueOf(weight.get(i)[j]));
             }
@@ -220,7 +220,7 @@ public class ExportFile extends javax.swing.JFrame {
             fw.append(",").append(String.valueOf(Sensitivity.get(i)));
             fw.append(",").append(String.valueOf(Specificity.get(i)));
             fw.append(",").append(String.valueOf(Bias.get(i)));
-            int c = 0;
+            int c = -1;
             for (int j = 0; j < combinations.get(i).length; j++) {
                 for (int k = c; k < combinations.get(i)[j] - 1; k++) fw.append(",");
                 c = combinations.get(i)[j];

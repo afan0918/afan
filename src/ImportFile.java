@@ -133,8 +133,8 @@ public class ImportFile extends javax.swing.JFrame {
 
     private void FilePickerActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        DataBase.csvFile = new CSVFile();
-        DataBase.csvFile.ChooseFile("C:\\Users\\Document");//得到檔案位置
+        DataBase.csvFile = new TSVFile();
+        DataBase.csvFile.ChooseFile();//得到檔案位置
         FilePath.setText(DataBase.csvFile.path);
     }
 
@@ -142,9 +142,9 @@ public class ImportFile extends javax.swing.JFrame {
         // TODO add your handling code here:
         DataBase.minAUC=Double.parseDouble(MinimumAUC.getText());
 
-        if(FilePath.getText().contains(".csv")) {
+        if(FilePath.getText().contains(".tsv")) {
             try {
-                DataBase.csvFile.GetCSVFileData(FilePath.getText());//取得csv中資料
+                DataBase.csvFile.GetTSVFileData(FilePath.getText());//取得csv中資料
                 DataBase.csvFile.ArrayListDataToArray();
                 DataBase.DataPath=FilePath.getText();
                 DataBase.ROC = new ROCcurve();

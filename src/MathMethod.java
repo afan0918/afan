@@ -6,6 +6,15 @@ import java.util.List;
  */
 class MathMethod {
 
+    public static void main(String[] args) {
+        List<int[]> a=Combination(5,2);
+        for(int i=0;i<a.size();i++){
+            for(int j=0;j<a.get(i).length;j++){
+                System.out.println(a.get(i)[j]);
+            }
+        }
+    }
+
     public static List<int[]> Combination(int n, int r) {
         List<int[]> combinations = new ArrayList<>();
         int[] combination = new int[r];

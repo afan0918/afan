@@ -72,22 +72,24 @@ public class LogisticRegressionMethod {
             predict[i] = binomial.predict(data[i]);
 
 
-        int tp = 0, fp = 0, fn = 0;
+        int tp = 0, fp = 0, fn = 0, tn = 0;
         for (int i = 0; i < predict.length; i++) {
             if (label[i] == 1) {
                 if (predict[i] == 1) tp++;
                 else if (predict[i] == 0) fn++;
             } else if (label[i] == 0) {
                 if (predict[i] == 1) fp++;
+                else if (predict[i] == 0) tn++;
             }
         }
 
         double recall = (double) tp / (tp + fn), precision = (double) tp / (tp + fp);
+        double specificity = (double) tn / (tn + fp);
         double fscore = 2 * recall * precision / (recall + precision);
 
         weight = binomial.coefficients();
         Sensitivity.add(recall);
-        Specificity.add(precision);
+        Specificity.add(specificity);
         FScore.add(fscore);
         Weight.add(weight);
     }

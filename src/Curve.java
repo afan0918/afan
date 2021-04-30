@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2015 Roc Project.  This is free software.  See
  * LICENSE.txt for details.
- * from https://github.com/kboyd/Roc/blob/master/java/src/mloss/roc/Curve.java
  */
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ import java.util.List;
  * construct this class.  There are two builders.  The regular {@link
  * Curve.Builder} accepts collections of objects and the {@link
  * Curve.PrimitivesBuilder} accepts arrays of primitive numbers.  (You
- * can use the class {link mloss.roc.util.IterableArray} to treat
+ * can use the class {mloss.roc.util.IterableArray} to treat
  * arrays of objects as iterable collections suitable for the regular
  * builder.)  You give a builder a list of scores (from your classifier)
  * and a corresponding list of labels and the builder does the rest.
@@ -250,7 +249,6 @@ public class Curve {
     }
 
     /**
-     * 拿來算[TP, FP, FN, TN]
      * Computes the confusion matrix at a particular classification
      * threshold.
      *
@@ -309,6 +307,8 @@ public class Curve {
      * Computes the area under the ROC curve.  (The curve is defined by
      * {@link #rocPoints()}.)
      *
+     * (I'm not sure why.)<-所以我把它改寫了
+     *
      * @return Area under the ROC curve
      */
     public double rocArea() {
@@ -327,8 +327,17 @@ public class Curve {
         // should be minimal floating point error provided
         // totalPositives and totalNegatives are not on extremely
         // different scales (i.e. the exponents are similar).
+        //System.out.println("uStatistics :"+uStatistics[1]+"totalPositives: "+totalPositives+"totalNegatives: "+totalNegatives);
         return uStatistics[1] / ((double) totalPositives * (double) totalNegatives);
     }
+//    public double rocArea() {
+//        double[][] Points=rocPoints();
+//        double res=0;
+//        for(int i=0;i<Points.length;i++){
+//            res+=(Points[i][1])/Points.length;
+//        }
+//        return res;
+//    }
 
     /**
      * Computes recall at a particular classification threshold.

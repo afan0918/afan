@@ -45,11 +45,11 @@ public class GUI extends javax.swing.JFrame {
         setTitle("Afan");
         initComponents();
         jPanel5.setTitle("");
-        jPanel5.setYLabel("Sensitivity");
-        jPanel5.setXLabel("1 - specificity");
+        jPanel5.setYLabel("TPR");
+        jPanel5.setXLabel("FPR");
         jPanel4.setTitle("");
-        jPanel4.setYLabel("Sensitivity");
-        jPanel4.setXLabel("1 - specificity");
+        jPanel4.setYLabel("TPR");
+        jPanel4.setXLabel("FPR");
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -660,7 +660,7 @@ public class GUI extends javax.swing.JFrame {
                 for (int i = 1; i < Combinations.get(pos).length; i++) {
                     jTextArea1.append("+ (" + weight.get(pos)[i] + " * " + DataBase.csvFile.DataTitle[Combinations.get(pos)[i] + 1] + ")");
                 }
-                jTextArea1.append(" + 1) > 0.5\nThe FScore is " + fscore + "\nSensitivity is " + Sensitivity.get(pos) + "Specificity is " + Specificity.get(pos));
+                jTextArea1.append(" + 1) > 0.5\nThe FScore is " + fscore + "\nSensitivity is " + Sensitivity.get(pos) + ", Specificity is " + Specificity.get(pos));
             } else {
                 jTextArea1.setText("The model is 1/(");
                 jTextArea1.append("(" + weight.get(0)[0] + " * " + DataBase.csvFile.DataTitle[1] + ")");
