@@ -2,8 +2,6 @@ import fr.ign.cogit.roc4j.graphics.RocSpace;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.style.Styler;
 
 import static javax.swing.UIManager.setLookAndFeel;
 
@@ -11,12 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * @author Afan Chen
@@ -45,11 +37,11 @@ public class GUI extends javax.swing.JFrame {
         setTitle("Afan");
         initComponents();
         jPanel5.setTitle("");
-        jPanel5.setYLabel("Sensitivity");
-        jPanel5.setXLabel("1 - specificity");
+        jPanel5.setYLabel("TPR");
+        jPanel5.setXLabel("FPR");
         jPanel4.setTitle("");
-        jPanel4.setYLabel("Sensitivity");
-        jPanel4.setXLabel("1 - specificity");
+        jPanel4.setYLabel("TPR");
+        jPanel4.setXLabel("FPR");
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -660,14 +652,14 @@ public class GUI extends javax.swing.JFrame {
                 for (int i = 1; i < Combinations.get(pos).length; i++) {
                     jTextArea1.append("+ (" + weight.get(pos)[i] + " * " + DataBase.csvFile.DataTitle[Combinations.get(pos)[i] + 1] + ")");
                 }
-                jTextArea1.append(" + 1) > 0.5\nThe FScore is " + fscore + "\nSensitivity is " + Sensitivity.get(pos) + "Specificity is " + Specificity.get(pos));
+                jTextArea1.append(" +　(" + weight.get(pos)[weight.get(pos).length-1] + ") + 1) > 0.5\nThe FScore is " + fscore + "\nSensitivity is " + Sensitivity.get(pos) + ", Specificity is " + Specificity.get(pos));
             } else {
                 jTextArea1.setText("The model is 1/(");
                 jTextArea1.append("(" + weight.get(0)[0] + " * " + DataBase.csvFile.DataTitle[1] + ")");
                 for (int i = 1; i < weight.get(0).length - 1; i++) {//lr會丟回多一個參數，最後一個是無效項
                     jTextArea1.append("+ (" + weight.get(0)[i] + " * " + DataBase.csvFile.DataTitle[i] + ")");
                 }
-                jTextArea1.append(" + 1) > 0.5\nThe FScore is " + FScores.get(0) + "\nSensitivity is " + Sensitivity.get(0) + "Specificity is " + Specificity.get(0));
+                jTextArea1.append(" + 1) > 0.5\nThe FScore is " + FScores.get(0) + "\nSensitivity is " + Sensitivity.get(0) + ", Specificity is " + Specificity.get(0));
             }
         }
     }

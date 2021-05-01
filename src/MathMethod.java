@@ -6,6 +6,15 @@ import java.util.List;
  */
 class MathMethod {
 
+    public static void main(String[] args) {
+        List<int[]> a=Combination(5,2);
+        for(int i=0;i<a.size();i++){
+            for(int j=0;j<a.get(i).length;j++){
+                System.out.println(a.get(i)[j]);
+            }
+        }
+    }
+
     public static List<int[]> Combination(int n, int r) {
         List<int[]> combinations = new ArrayList<>();
         int[] combination = new int[r];
@@ -68,5 +77,15 @@ class MathMethod {
             max=Math.max(max,list.get(i));
         }
         return max;
+    }
+
+    public static double dot(double[] x, double[] w) {
+        double dot = 0;
+
+        for(int i = 0; i < x.length; ++i) {
+            dot += x[i] * w[i];
+        }
+
+        return dot;
     }
 }

@@ -66,6 +66,7 @@ public class ROCcurve {
             for (int j = 0; j < label.length; j++) {
                 FPRAndTPR = curve.rocPoint(j);
                 tmp = FPRAndTPR[0] - FPRAndTPR[1];
+                //System.out.println(FPRAndTPR[1]);
                 if (Math.abs(tmp) > maxVal) {
                     CutOffPoint = j;
                     maxVal = Math.abs(tmp);
@@ -78,6 +79,8 @@ public class ROCcurve {
                 auc.add(curve.rocArea());
             else
                 auc.add(1 - curve.rocArea());
+
+            System.out.println(curve.rocArea());
 
             int[] TP_FP_FN_TN=curve.confusionMatrix(CutOffPoint);
             double recall = (double) TP_FP_FN_TN[0] / (TP_FP_FN_TN[0] + TP_FP_FN_TN[2]), precision = (double) TP_FP_FN_TN[0] / (TP_FP_FN_TN[0] + TP_FP_FN_TN[1]);
@@ -92,9 +95,9 @@ public class ROCcurve {
 
                 ROC.add(roc);
 
-                int r = (int) (Math.random() * 200);
-                int g = (int) (Math.random() * 200);
-                int b = (int) (Math.random() * 200);
+                int r = (int) (Math.random() * 240);
+                int g = (int) (Math.random() * 240);
+                int b = (int) (Math.random() * 240);
 
                 Color color = new Color(r, g, b);
                 colors.add(color);

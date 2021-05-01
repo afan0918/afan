@@ -165,14 +165,14 @@ public class ExportFile extends javax.swing.JFrame {
      * @param weight
      */
 
-    private void SaveLRModel(String Path, ArrayList<int[]> combinations, ArrayList<Double> FScore, ArrayList<Double> Sensitivity, ArrayList<Double> Specificity, String[] DataTitle, ArrayList<double[]> weight) throws IOException {
+    private void SaveLRModel(String Path, ArrayList<int[]> combinations, ArrayList<Double> FScore, ArrayList<Double> AUCs, ArrayList<Double> Sensitivity, ArrayList<Double> Specificity, String[] DataTitle, ArrayList<double[]> weight) throws IOException {
         BufferedWriter fw = null;
 
         fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Path, true), StandardCharsets.UTF_8)); // 指定編碼格式，以免中文字符異常
-        fw.write("Combinations,Fscore,Sensitivity,Specificity");
+        fw.write("Combinations,Fscore,AUC,Sensitivity,Specificity,Constant");
 
-        for (int i = 0; i < DataTitle.length; i++) {
-            fw.append(",").append(DataTitle[i]);
+        for (String s : DataTitle) {
+            fw.append(",").append(s);
         }
 
         fw.newLine();
@@ -180,9 +180,11 @@ public class ExportFile extends javax.swing.JFrame {
         for (int i = 0; i < combinations.size(); i++) {
             fw.append(String.valueOf(combinations.get(i).length));
             fw.append(",").append(String.valueOf(FScore.get(i)));
+            fw.append(",").append(String.valueOf(AUCs.get(i)));
             fw.append(",").append(String.valueOf(Sensitivity.get(i)));
             fw.append(",").append(String.valueOf(Specificity.get(i)));
-            int c = 0;
+            fw.append(",").append(String.valueOf(weight.get(i)[weight.get(i).length-1]));
+            int c = -1;
             for (int j = 0; j < combinations.get(i).length; j++) {
                 for (int k = c; k < combinations.get(i)[j] - 1; k++) fw.append(",");
                 c = combinations.get(i)[j];
@@ -193,12 +195,10 @@ public class ExportFile extends javax.swing.JFrame {
 
         fw.flush(); // 全部寫入緩存中的內容
 
-        if (fw != null) {
-            try {
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -208,8 +208,8 @@ public class ExportFile extends javax.swing.JFrame {
         fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Path, true), StandardCharsets.UTF_8)); // 指定編碼格式，以免中文字符異常
         fw.write("Combinations,Fscore,Sensitivity,Specificity,Bias");
 
-        for (int i = 0; i < DataTitle.length; i++) {
-            fw.append(",").append(DataTitle[i]);
+        for (String s : DataTitle) {
+            fw.append(",").append(s);
         }
 
         fw.newLine();
@@ -220,7 +220,7 @@ public class ExportFile extends javax.swing.JFrame {
             fw.append(",").append(String.valueOf(Sensitivity.get(i)));
             fw.append(",").append(String.valueOf(Specificity.get(i)));
             fw.append(",").append(String.valueOf(Bias.get(i)));
-            int c = 0;
+            int c = -1;
             for (int j = 0; j < combinations.get(i).length; j++) {
                 for (int k = c; k < combinations.get(i)[j] - 1; k++) fw.append(",");
                 c = combinations.get(i)[j];
@@ -231,14 +231,47 @@ public class ExportFile extends javax.swing.JFrame {
 
         fw.flush(); // 全部寫入緩存中的內容
 
-        if (fw != null) {
-            try {
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void SaveSVMModel(String Path, ArrayList<int[]> combinations, ArrayList<Double> FScore, ArrayList<Double> AUCs, ArrayList<Double> Sensitivity, ArrayList<Double> Specificity, String[] DataTitle, ArrayList<double[]> weight, ArrayList<Double> Bias) throws IOException {
+        BufferedWriter fw = null;
+        fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Path, true), StandardCharsets.UTF_8)); // 指定編碼格式，以免中文字符異常
+        fw.write("Combinations,Fscore,AUC,Sensitivity,Specificity,Bias");
+
+        for (String s : DataTitle) {
+            fw.append(",").append(s);
         }
 
+        fw.newLine();
+
+        for (int i = 0; i < combinations.size(); i++) {
+            fw.append(String.valueOf(combinations.get(i).length));
+            fw.append(",").append(String.valueOf(FScore.get(i)));
+            fw.append(",").append(String.valueOf(AUCs.get(i)));
+            fw.append(",").append(String.valueOf(Sensitivity.get(i)));
+            fw.append(",").append(String.valueOf(Specificity.get(i)));
+            fw.append(",").append(String.valueOf(Bias.get(i)));
+            int c = -1;
+            for (int j = 0; j < combinations.get(i).length; j++) {
+                for (int k = c; k < combinations.get(i)[j] - 1; k++) fw.append(",");
+                c = combinations.get(i)[j];
+                fw.append(",").append(String.valueOf(weight.get(i)[j]));
+            }
+            fw.newLine();
+        }
+
+        fw.flush(); // 全部寫入緩存中的內容
+
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void SaveROCCurve(String Path, String[] DataTitle, ArrayList<Double> auc, ArrayList<Double> CutOffPoints) throws IOException {
@@ -254,8 +287,8 @@ public class ExportFile extends javax.swing.JFrame {
 
         fw.append("Cut-off point value");
 
-        for (int i = 0; i < CutOffPoints.size(); i++) {
-            fw.append(",").append(String.valueOf(CutOffPoints.get(i)));
+        for (Double cutOffPoint : CutOffPoints) {
+            fw.append(",").append(String.valueOf(cutOffPoint));
         }
 
         fw.newLine();
@@ -268,46 +301,43 @@ public class ExportFile extends javax.swing.JFrame {
 
         fw.flush(); // 全部寫入緩存中的內容
 
-        if (fw != null) {
-            try {
-                fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
 
-
     private void SaveActionPerformed(java.awt.event.ActionEvent evt) {
-        boolean flag=true;
-        if(ExportModel.isSelected()&&GUI.logisticRegressionMethod!=null){
+        boolean flag = true;
+        if (ExportModel.isSelected() && GUI.logisticRegressionMethod != null) {
             try {
-                SaveLRModel(FilePath.getText()+"\\LogisticRegression.csv",GUI.logisticRegressionMethod.getCombinations(),GUI.logisticRegressionMethod.getFScore(),GUI.logisticRegressionMethod.getSensitivity(),GUI.logisticRegressionMethod.getSpecificity(),DataBase.ROC.DataTitle,GUI.logisticRegressionMethod.getWeight());
+                SaveLRModel(FilePath.getText() + "\\LogisticRegression.csv", GUI.logisticRegressionMethod.getCombinations(), GUI.logisticRegressionMethod.getFScore(), GUI.logisticRegressionMethod.getAUCs(), GUI.logisticRegressionMethod.getSensitivity(), GUI.logisticRegressionMethod.getSpecificity(), DataBase.ROC.DataTitle, GUI.logisticRegressionMethod.getWeight());
             } catch (IOException e) {
-                flag=false;
+                flag = false;
                 e.printStackTrace();
             }
         }
-        if(ExportModel.isSelected()&&GUI.svmMethod!=null){
+        if (ExportModel.isSelected() && GUI.svmMethod != null) {
             try {
-                SaveSVMModel(FilePath.getText()+"\\SVM.csv",GUI.svmMethod.getCombinations(),GUI.svmMethod.getFScore(),GUI.svmMethod.getSensitivity(),GUI.svmMethod.getSpecificity(),DataBase.ROC.DataTitle,GUI.svmMethod.getWeight(),GUI.svmMethod.getBias());
+                SaveSVMModel(FilePath.getText() + "\\SVM.csv", GUI.svmMethod.getCombinations(), GUI.svmMethod.getFScore(), GUI.svmMethod.getSensitivity(), GUI.svmMethod.getSpecificity(), DataBase.ROC.DataTitle, GUI.svmMethod.getWeight(), GUI.svmMethod.getBias());
             } catch (IOException e) {
-                flag=false;
+                flag = false;
                 e.printStackTrace();
             }
         }
-        if(ExportROCCurve.isSelected()){
+        if (ExportROCCurve.isSelected()) {
             try {
-                SaveROCCurve(FilePath.getText()+"\\ROC_Curve.csv",DataBase.csvFile.DataTitle,DataBase.ROC.auc,DataBase.ROC.CutOffPoints);
+                SaveROCCurve(FilePath.getText() + "\\ROC_Curve.csv", DataBase.csvFile.DataTitle, DataBase.ROC.auc, DataBase.ROC.CutOffPoints);
             } catch (IOException e) {
-                flag=false;
+                flag = false;
                 e.printStackTrace();
             }
-            DataBase.ROC.SavepngFile(FilePath.getText()+"\\ROC_Curve.png");
+            DataBase.ROC.SavepngFile(FilePath.getText() + "\\ROC_Curve.png");
         }
 
-        if(flag) {
+        if (flag) {
             ExportFile f = this;
             f.dispose();
         }
