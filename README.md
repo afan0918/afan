@@ -27,12 +27,19 @@ You can follow the document to learn how to use it.
 
 Input .csv file and follow the format.
 
+**If you want to store .tsv file data, please go to the tsv branch**
+
 You can discard features with low AUC values.
 
 ## Output
 
 *    model(weights)
 *    roc cut-off point value
+
+
+![](https://github.com/afan0918/Afan/blob/tsv/exampleData/1.png)
+
+![](https://github.com/afan0918/Afan/blob/tsv/exampleData/2.png)
 
 ## Features
 
