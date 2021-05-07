@@ -7,11 +7,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
+ * bug原因，title沒有改動導致匯出錯誤
  * @author Afan Chen
  */
 public class TSVFile {
 
     public String path = "C:\\Users";
+    public String[] allTitle;
     public String[] DataTitle;
     private final ArrayList<String> sampleName = new ArrayList<>();
     private final ArrayList<Integer> labelMat = new ArrayList<>();
@@ -50,15 +52,16 @@ public class TSVFile {
         if ((line = reader.readLine()) == null) return;
 
         DataTitle = line.split("\t");
-        for(String x:DataTitle) System.out.println(x);
+        for (String x : DataTitle) System.out.println(x);
 
         while ((line = reader.readLine()) != null) {
             String[] item = line.split("\t");
             ArrayList<Double> tmp = new ArrayList<>();
             sampleName.add(item[0]);
-            labelMat.add(item[1].compareTo("H")==0?1:0);//H是1，A是0
+            labelMat.add(item[1].compareTo("H") == 0 ? 0 : 1);//h是0,a是1
             for (int i = 2; i < item.length; i++)
-                tmp.add(item[i].compareTo("NA")==0?1:Double.parseDouble(item[i]));
+                tmp.add(item[i].compareTo("NA") == 0 ?
+                        Double.NaN : Double.parseDouble(item[i]));
             data.add(tmp);
         }
 
@@ -66,24 +69,50 @@ public class TSVFile {
     }
 
     /**
+     * 處裡NA值
      * 將data的型態轉成array方便之後取用
      */
 
     public void ArrayListDataToArray() {
 
-        doubleData = new double[data.size()][data.get(0).size()];
-        IntLabelMat = new int[labelMat.size()];
+        int n = data.size(), m = 0;
+        boolean[] badData = new boolean[data.get(0).size()];
 
-        for (int i = 0; i < doubleData.length; i++) {
-            for (int j = 0; j < doubleData[0].length; j++) {
-                doubleData[i][j] = data.get(i).get(j);
-//                System.out.println(doubleData[i][j]);
+        for (int i = 0; i < data.get(0).size(); i++) {
+            int sum = 0;
+            for (ArrayList<Double> datum : data) {
+                if (datum.get(i).isNaN()) sum++;
             }
+            badData[i] = sum * 5 < n;
+            if (badData[i]) ++m;
         }
+
+        doubleData = new double[data.size()][m];
+        IntLabelMat = new int[labelMat.size()];
+        int c = 0;
+        String[] title=new String[m+1];
+
+        for (int i = 0; i < data.get(0).size(); ++i) {
+            if (!badData[i]) continue;
+            for (int j = 0; j < data.size(); j++) {
+                doubleData[j][c] = data.get(j).get(i).isNaN() ?
+                        1 : data.get(j).get(i);
+            }
+            c++;
+        }
+
+        c=0;
+
+        for (int i = 2; i < DataTitle.length; ++i) {
+            if (!badData[i-2]) continue;
+            title[++c]=DataTitle[i];
+        }
+
+        allTitle=DataTitle;
+        DataTitle=title;
 
         for (int i = 0; i < labelMat.size(); i++) {
             IntLabelMat[i] = labelMat.get(i);
-//            System.out.println(IntLabelMat[i]);
         }
     }
 }
