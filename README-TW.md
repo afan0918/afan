@@ -2,6 +2,8 @@
 
 [English](https://github.com/afan0918/Afan#readme) | 繁體中文
 
+不再更新，相關訊息請關注我的[部落格](https://afan0918.github.io/)
+
 因為教授說想不到名字，也可以拿自己的名字當名稱，我就這樣了。
 
 不要太在意啦，我的第一個寫破萬行很多很多的project餒，至少紀念一下，夢開始的地方。
