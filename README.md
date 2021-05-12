@@ -4,8 +4,6 @@ English | [繁體中文](https://github.com/afan0918/Afan/blob/main/README-TW.md
 
 ## Use software to simplify the process of doing machine learning.
 
-The project is fork from [Use-Logistic-regression-to-process-data](https://github.com/afan0918/Use-Logistic-regression-to-process-data)(in my repositories).
-
 ### The minimum jdk requirements to run Afan, jdk 15.
 
 ## Description
