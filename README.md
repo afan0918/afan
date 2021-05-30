@@ -1,5 +1,7 @@
 # Afan
 
+最新進度在: https://github.com/afan0918/afan2
+
 English | [繁體中文](https://github.com/afan0918/Afan/blob/main/README-TW.md#afan)
 
 ## Use software to simplify the process of doing machine learning.
