@@ -1,6 +1,9 @@
 # Afan
 
+# 重要
+
 最新進度在: https://github.com/afan0918/afan2
+開發完畢後才會搬過來這裡
 
 English | [繁體中文](https://github.com/afan0918/Afan/blob/main/README-TW.md#afan)
 
