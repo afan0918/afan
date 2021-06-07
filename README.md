@@ -2,8 +2,9 @@
 
 # 重要
 
-最新進度在: https://github.com/afan0918/afan2
-開發完畢後才會搬過來這裡
+最新進度(2.0.0)在: https://github.com/afan0918/afan2
+
+因為之前不會用git，所以都是手動丟檔案上來，並且整體架構大改，因而另外開了一個，抱歉。
 
 English | [繁體中文](https://github.com/afan0918/Afan/blob/main/README-TW.md#afan)
 
